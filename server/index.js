@@ -8,9 +8,9 @@ app.use(express.json());
 
 const balances = {
   //public keys
-  "11894ff2dd03609d7a9b97061e2cba856fc91134": 100, //user1
-  "bae75a5541f61467c11535eb323ebccf7d119a61": 50, //user2
-  "04c517e9dbe5a36eeaf5daa9a64424d8d9a9a549": 75, //user3
+  "04d1ad362119af46977f1c2562879ac80bf3e1492db26ccb94f3f0f8acaef4f1b03657048e2d1b18ad630514920b7d355f8ec2ce0c6d85ef070c73b23ccf101e85": 1000, //user1
+  "04ab26d9cf29a9688a99d5c09f336b0f5e0cf6fc3dadda4c0f68028b7a182a2367f4965df58c28b57d475f78c04e146352f6645c5f0ff32f6349c6f697509ba9dd": 500, //user2
+  "04dcd17d049a37e8a83dbdf1838915b8d10d0b960a4d9fbbb5c69c79cffaf73e4663bb04da1151495da80532c4a7aaa1a1fd34da0e6095e18e00326467901b7826": 750, //user3
 };
 
 app.get("/balance/:address", (req, res) => {
@@ -20,6 +20,9 @@ app.get("/balance/:address", (req, res) => {
 });
 
 app.post("/send", (req, res) => {
+  // get a signature from the client-side application
+  // recover the public key from the signature
+
   const { sender, recipient, amount } = req.body;
 
   setInitialBalance(sender);

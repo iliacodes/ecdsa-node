@@ -8,8 +8,4 @@ console.log("privateKey: ", toHex(privateKey));
 
 const publicKey = secp.getPublicKey(privateKey);
 
-const publicKeyKeccakHash = keccak256(publicKey);
-
-const addy = publicKeyKeccakHash.slice(-20);
-
-console.log("publicKey hashed with keccak: ", toHex(addy));
+console.log("publicKey hashed with keccak: ", toHex(publicKey));

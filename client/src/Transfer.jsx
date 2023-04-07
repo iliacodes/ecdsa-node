@@ -1,7 +1,7 @@
 import { useState } from "react";
 import server from "./server";
 
-function Transfer({ address, setBalance }) {
+function Transfer({ address, setBalance, privateKey }) {
   const [sendAmount, setSendAmount] = useState("");
   const [recipient, setRecipient] = useState("");
 
@@ -9,18 +9,23 @@ function Transfer({ address, setBalance }) {
 
   async function transfer(evt) {
     evt.preventDefault();
-
-    try {
-      const {
-        data: { balance },
-      } = await server.post(`send`, {
-        sender: address,
-        amount: parseInt(sendAmount),
-        recipient,
-      });
-      setBalance(balance);
-    } catch (ex) {
-      alert(ex.response.data.message);
+    if (sendAmount && recipient && privateKey && address) {
+      try {
+        const {
+          data: { balance },
+        } = await server.post(`send`, {
+          sender: address,
+          amount: parseInt(sendAmount),
+          recipient,
+          privateKey,
+        });
+        setBalance(balance);
+        alert("Your transfer was successsful!");
+      } catch (ex) {
+        alert(ex.response.data.message);
+      }
+    } else {
+      alert("Please fill in all required fields");
     }
   }
 
@@ -34,19 +39,21 @@ function Transfer({ address, setBalance }) {
           placeholder="1, 2, 3..."
           value={sendAmount}
           onChange={setValue(setSendAmount)}
+          required
         ></input>
       </label>
 
       <label>
         Recipient
         <input
-          placeholder="Type an address, for example: 0x2"
+          placeholder="Enter the receiver address"
           value={recipient}
           onChange={setValue(setRecipient)}
+          required
         ></input>
       </label>
 
-      <input type="submit" className="button" value="Transfer" />
+      <input type="submit" className="button" value="transfer" />
     </form>
   );
 }

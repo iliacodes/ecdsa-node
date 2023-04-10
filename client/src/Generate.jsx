@@ -41,11 +41,11 @@ function Generate() {
         Generate Keys
       </button>
       {Object.keys(keys).length > 0 && (
-        <div className="wallet">
-          <h3>Address: {keys.address}</h3>
-          <div className="keys-container">
+        <div className="keys-container">
+          <div className="wallet">
+            <h4>Address: {keys.address}</h4>
             <div className="key">
-              <h3>
+              <h4>
                 Public Key:{" "}
                 <span className="key-text">
                   {formatPublicKey(keys.publicKey)}
@@ -53,10 +53,10 @@ function Generate() {
                 <button onClick={togglePublicKey}>
                   {showPublicKey ? "Hide" : "Show"}
                 </button>
-              </h3>
+              </h4>
             </div>
             <div className="key">
-              <h3>
+              <h4>
                 Private Key:{" "}
                 <span className="key-text">
                   {showPrivateKey ? toHex(keys.privateKey) : "********"}
@@ -64,7 +64,7 @@ function Generate() {
                 <button onClick={togglePrivateKey}>
                   {showPrivateKey ? "Hide" : "Show"}
                 </button>
-              </h3>
+              </h4>
             </div>
           </div>
         </div>

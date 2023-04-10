@@ -3,6 +3,7 @@ import Transfer from "./Transfer";
 import "./App.scss";
 import { useState } from "react";
 import Generate from "./Generate";
+import Hero from "./Hero";
 
 function App() {
   const [balance, setBalance] = useState(0);
@@ -11,6 +12,7 @@ function App() {
 
   return (
     <div className="app">
+      <Hero />
       <Generate />
       <div style={{ width: "45%" }}>
         <Wallet

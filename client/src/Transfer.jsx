@@ -20,12 +20,12 @@ function Transfer({ address, setBalance, privateKey }) {
           privateKey,
         });
         setBalance(balance);
-        alert("Your transfer was successsful!");
+        alert("Transfer successful.");
       } catch (ex) {
         alert(ex.response.data.message);
       }
     } else {
-      alert("Please fill in all required fields");
+      alert("Please complete all fields.");
     }
   }
 
@@ -36,7 +36,7 @@ function Transfer({ address, setBalance, privateKey }) {
       <label>
         Send Amount
         <input
-          placeholder="1, 2, 3..."
+          placeholder="How much would you like to send?"
           value={sendAmount}
           onChange={setValue(setSendAmount)}
           required
@@ -46,7 +46,7 @@ function Transfer({ address, setBalance, privateKey }) {
       <label>
         Recipient
         <input
-          placeholder="Enter the receiver address"
+          placeholder="Enter the receipient address."
           value={recipient}
           onChange={setValue(setRecipient)}
           required

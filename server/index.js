@@ -15,10 +15,17 @@ app.use(cors());
 app.use(express.json());
 
 const balances = {
-  "0x380d8a78ff6a4cbefa6661c14936562a9af2dc41": 100,
-  "0x788467abe56dd46000964daec9256a3b92836b67": 50,
-  "0x344e814e23fe5f00f4aed0bc02b6778620aa3a64": 75,
+  "0xe5a013288b65555e047e546af9e8fcddea3b87ca": 100,
+  "0x7d168963e7d51a1a06756972a74055ea7b81abd8": 50,
+  "0x730dfed9618801acd14039e012990ca47671ce08": 75,
 };
+
+//private Keys
+const privateKeys = {
+  "eb8c973850127a81dd5e26f32faccd27c2e3d9379f38874789a7ff7b6c405b9c": true,
+  "262c5a95a7e4ff046dc8641a35b3f374cdd8437163da22a3e27affebfdc27c46": true,
+  "57fe6d808516112ff7ebe5d476c1218d0d4a8a778250d5fb897ef2025221ea6e": true,
+}
 
 app.get("/balance/:address", (req, res) => {
   const { address } = req.params;
@@ -36,7 +43,7 @@ app.post("/send", async (req, res) => {
   const { privateKey, sender, amount, recipient } = req.body;
 
   if (!secp.utils.isValidPrivateKey(privateKey)) {
-    res.status(400).send({ message: "Invalid private key!" });
+    res.status(400).send({ message: "Invalid private key." });
     return;
   }
 
@@ -50,7 +57,7 @@ app.post("/send", async (req, res) => {
     setInitialBalance(recipient);
 
     if (balances[sender] < amount) {
-      res.status(400).send({ message: "Not enough funds!" });
+      res.status(400).send({ message: "Not enough funds for transfer." });
       return
     } else {
       balances[sender] -= amount;
@@ -58,7 +65,7 @@ app.post("/send", async (req, res) => {
       res.send({ balance: balances[sender] });
     }
   } else {
-    res.status(400).send({ message: "Signature not verified. Please enter a valid private key." });
+    res.status(400).send({ message: "Signature not verified. Please enter a corresponding private key." });
     return;
   }
 });

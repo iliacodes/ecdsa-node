@@ -14,7 +14,7 @@ const generate = function() {
     const publicKeyHash = (keccak256(remainingKey)).slice(-20);
     const address = `0x${toHex(publicKeyHash)}`;
 
-    console.log("privateKey: ", privateKey, "publicKey: ", publicKey, "address: ", address);
+    console.log("privateKey: ", toHex(privateKey), "publicKey: ", toHex(publicKey), "address: ", address);
 
     return {
         privateKey,
@@ -24,6 +24,3 @@ const generate = function() {
 }
 
 module.exports = generate;
-
-
-

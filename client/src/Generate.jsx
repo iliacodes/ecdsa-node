@@ -1,36 +1,74 @@
 import React, { useState } from "react";
 import server from "./server";
+import { toHex } from "ethereum-cryptography/utils";
 
 function Generate() {
-  const [keys, setKeys] = useState([]);
+  const [keys, setKeys] = useState({});
+  const [showPrivateKey, setShowPrivateKey] = useState(false);
+  const [showPublicKey, setShowPublicKey] = useState(false);
 
   async function generateKeys(evt) {
     evt.preventDefault();
     const { data: newKeys } = await server.get(`generate`);
-    setKeys(newKeys);
-  }
-
-  let generatedKeys = null;
-  if (Array.isArray(keys)) {
-    generatedKeys = keys.map((keys, i) => {
-      return (
-        <li key={i} style={{ wordBreak: "break-all" }} className='keyList'>
-          <h4 className="keys">Private Key #{i + 1}:</h4> <br /> {keys.privateKey} <br />
-          <h4 className="keys">Public Key #{i + 1}:</h4> <br /> {keys.publicKey} <br />
-          <h4 className="keys">Wallet Address #{i + 1}:</h4> <br /> {keys.address} <br />
-        </li>
-      );
+    console.log(newKeys); // This is the object of keys
+    setKeys({
+      ...newKeys,
+      privateKey: new Uint8Array(Object.values(newKeys.privateKey)),
+      publicKey: new Uint8Array(Object.values(newKeys.publicKey)),
     });
   }
 
+  function togglePrivateKey() {
+    setShowPrivateKey(!showPrivateKey);
+  }
+
+  function togglePublicKey() {
+    setShowPublicKey(!showPublicKey);
+  }
+
+  function formatPublicKey(key) {
+    if (!showPublicKey) {
+      return `${toHex(key.slice(0, 6))}********${toHex(
+        key.slice(key.length - 6, key.length)
+      )}`;
+    }
+    return toHex(key);
+  }
+
   return (
-    <div className="container wallet" style={{width: '45%'}}>
+    <div className="container wallet" style={{ width: "45%" }}>
       <button className="button" onClick={generateKeys}>
         Generate Keys
       </button>
-      <ul>
-        {generatedKeys}
-      </ul>
+      {Object.keys(keys).length > 0 && (
+        <div className="wallet">
+          <h3>Address: {keys.address}</h3>
+          <div className="keys-container">
+            <div className="key">
+              <h3>
+                Public Key:{" "}
+                <span className="key-text">
+                  {formatPublicKey(keys.publicKey)}
+                </span>
+                <button onClick={togglePublicKey}>
+                  {showPublicKey ? "Hide" : "Show"}
+                </button>
+              </h3>
+            </div>
+            <div className="key">
+              <h3>
+                Private Key:{" "}
+                <span className="key-text">
+                  {showPrivateKey ? toHex(keys.privateKey) : "********"}
+                </span>
+                <button onClick={togglePrivateKey}>
+                  {showPrivateKey ? "Hide" : "Show"}
+                </button>
+              </h3>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

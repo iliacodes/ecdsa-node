@@ -6,11 +6,7 @@ function Hero() {
     <div className="intro">
       <h1>FreeBits</h1>
       <p>
-        The ECDSA Node Project Demo is a comprehensive example showcasing the
-        implementation of Elliptic Curve Digital Signature Algorithm (ECDSA)
-        using Node.js and the Ethereum cryptography library. This project
-        demonstrates how to create, manage, and verify digital signatures in a
-        simple, secure, and efficient manner.
+        The ECDSA Node Project Demo is a comprehensive demonstration of how to use the Ethereum cryptography library to implement the Elliptic Curve Digital Signature Algorithm (ECDSA) in Node.js. The project showcases a secure, efficient, and easy-to-understand approach to creating, managing, and verifying digital signatures.
       </p>
       <p>
         Instructions:
